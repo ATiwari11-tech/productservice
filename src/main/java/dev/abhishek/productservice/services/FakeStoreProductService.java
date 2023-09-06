@@ -24,7 +24,6 @@ public class FakeStoreProductService implements ProductService{
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<GenericProductDTO> response = restTemplate.postForEntity(
                 createProductRequestUrl,product,GenericProductDTO.class);
-        System.out.println("Response Body:"+response.getBody());
         return response.getBody();
     }
 
