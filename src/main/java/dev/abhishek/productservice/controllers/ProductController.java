@@ -1,6 +1,5 @@
 package dev.abhishek.productservice.controllers;
 
-import dev.abhishek.productservice.dtos.ExceptionDTO;
 import dev.abhishek.productservice.dtos.GenericProductDTO;
 import dev.abhishek.productservice.exceptions.NotFoundException;
 import dev.abhishek.productservice.services.ProductService;
