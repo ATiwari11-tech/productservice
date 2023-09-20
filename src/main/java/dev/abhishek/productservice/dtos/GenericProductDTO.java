@@ -1,6 +1,7 @@
 package dev.abhishek.productservice.dtos;
 
 import dev.abhishek.productservice.models.Category;
+import dev.abhishek.productservice.models.Price;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,6 @@ public class GenericProductDTO {
     private String title;
     private String description;
     private String image;//url of the image
-    private String category;
-    private double price;
+    private Category category;
+    private Price price;
 }
