@@ -23,13 +23,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.sql.SQLOutput;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootApplication
-public class ProductserviceApplication //implements CommandLineRunner
+public class ProductserviceApplication implements CommandLineRunner
 {
     private MentorRepository mentorRepository;
     private UserRepository userRepository;
@@ -47,8 +50,9 @@ public class ProductserviceApplication //implements CommandLineRunner
         this.categoryRepository = categoryRepository;
         this.priceRepository = priceRepository;
     }
-//    @Override
-//    public void run(String... args) throws Exception {
+    @Transactional
+    @Override
+    public void run(String... args) throws Exception {
 //        Mentor mentor = new Mentor();
 //        mentor.setName("Abhishek");
 //        mentor.setEmail("abhishek@scaler.com");
@@ -63,18 +67,18 @@ public class ProductserviceApplication //implements CommandLineRunner
 //        for(User user1:users){
 //            System.out.println(user1);
 //        }
-        //*****************************
+
 //        Category category = new Category();
 //        category.setName("Apple Devices");
-        //*******************************
-
+//
+//
 //        Category savedCategory  = categoryRepository.save(category);//Assume you forgot to save this
-        //*********************************
+//
 //        Price price = new Price("Rupees",10);
-        //*********************************
-
+//
+//
 //        Price savedPrice = priceRepository.save(price);//Assume we forgot to save this
-        //******************************
+//
 //        Product product = new Product();
 //        product.setTitle("iPhone 15 Pro");
 //        product.setDescription("Best iPhone Ever");
@@ -85,7 +89,7 @@ public class ProductserviceApplication //implements CommandLineRunner
 //        List<Product> products = productRepository.findAllByPrice_Currency("Rupees");
 //        System.out.println(productRepository.countAllByPrice_Currency("Rupees"));
 //        Product sortedProduct = productRepository.findByTitleEqualsAndPrice_PriceOrderByPrice_Price("iPhone 15 Pro",10);
-        //********************************
+
 
 
 //        Category category1 = categoryRepository.findById(UUID.fromString("4ef22b9e-7fa8-4b71-b2fe-5aade9c39e16")).get();
@@ -99,10 +103,10 @@ public class ProductserviceApplication //implements CommandLineRunner
 //                System.out.println(e.getMessage());
 //            }
 //        }
-        //**************************************
+
 //        List<Product> newProducts = productRepository.findAllByTitle("iPhone 15 Pro");
 //        System.out.println("New Prods:"+newProducts);
-        //***************************************
+
 
 
         //Create Product
@@ -118,10 +122,27 @@ public class ProductserviceApplication //implements CommandLineRunner
 //        selfProductService.createProduct(product);
 //
 //        //Get All Products
-//        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findAllByTitle("iPhone 15 Pro");
+//        System.out.println("Fetching Category 3c2b8434-dea4-481c-bd01-53adc297e634");
+//        Thread.sleep(1000);
+//        Optional<Category> category1Optional = categoryRepository.findById(UUID.fromString("3c2b8434-dea4-481c-bd01-53adc297e634"));
+//        Category category = category1Optional.get();
+//        System.out.println("Fetching products for category");
+//        Thread.sleep(1000);
+//        category.getProducts();
+        doSomething();
 
-//    }
+    }
 
+    public  void doSomething() throws Exception{
+        System.out.println("Fetching Category 3c2b8434-dea4-481c-bd01-53adc297e634");
+        Thread.sleep(1000);
+        Optional<Category> category1Optional = categoryRepository.findById(UUID.fromString("3c2b8434-dea4-481c-bd01-53adc297e634"));
+        Category category = category1Optional.get();
+        System.out.println("Fetching products for category");
+        Thread.sleep(1000);
+        category.getProducts();
+    }
     public static void main(String[] args) {
         SpringApplication.run(ProductserviceApplication.class, args);
     }

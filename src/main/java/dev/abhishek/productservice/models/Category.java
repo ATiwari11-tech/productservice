@@ -18,7 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Category extends BaseModel {
     private String name;
-    @OneToMany(fetch = jakarta.persistence.FetchType.EAGER, mappedBy = "category")
-    List<Product> products = new ArrayList<>();
+//    @OneToMany(fetch = jakarta.persistence.FetchType.EAGER, mappedBy = "category")
+@OneToMany(mappedBy = "category")
+    List<Product> products;
 
 }
