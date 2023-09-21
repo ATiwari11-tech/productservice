@@ -18,6 +18,7 @@ import dev.abhishek.productservice.models.Product;
 import dev.abhishek.productservice.repository.CategoryRepository;
 import dev.abhishek.productservice.repository.PriceRepository;
 import dev.abhishek.productservice.repository.ProductRepository;
+import dev.abhishek.productservice.services.SelfProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,7 +29,8 @@ import java.util.List;
 import java.util.UUID;
 
 @SpringBootApplication
-public class ProductserviceApplication implements CommandLineRunner {
+public class ProductserviceApplication //implements CommandLineRunner
+{
     private MentorRepository mentorRepository;
     private UserRepository userRepository;
     private final ProductRepository productRepository;
@@ -45,8 +47,8 @@ public class ProductserviceApplication implements CommandLineRunner {
         this.categoryRepository = categoryRepository;
         this.priceRepository = priceRepository;
     }
-    @Override
-    public void run(String... args) throws Exception {
+//    @Override
+//    public void run(String... args) throws Exception {
 //        Mentor mentor = new Mentor();
 //        mentor.setName("Abhishek");
 //        mentor.setEmail("abhishek@scaler.com");
@@ -61,22 +63,30 @@ public class ProductserviceApplication implements CommandLineRunner {
 //        for(User user1:users){
 //            System.out.println(user1);
 //        }
-        Category category = new Category();
-        category.setName("Apple Devices");
-//        Category savedCategory  = categoryRepository.save(category);//Assume you forgot to save this
+        //*****************************
+//        Category category = new Category();
+//        category.setName("Apple Devices");
+        //*******************************
 
-        Price price = new Price("Rupees",10);
+//        Category savedCategory  = categoryRepository.save(category);//Assume you forgot to save this
+        //*********************************
+//        Price price = new Price("Rupees",10);
+        //*********************************
+
 //        Price savedPrice = priceRepository.save(price);//Assume we forgot to save this
-        Product product = new Product();
-        product.setTitle("iPhone 15 Pro");
-        product.setDescription("Best iPhone Ever");
-        product.setCategory(category);
-        product.setPrice(price);
-        productRepository.save(product);
-        productRepository.deleteById(UUID.fromString("a1617cfa-8a3a-4538-9d81-c475c2d31799"));
-        List<Product> products = productRepository.findAllByPrice_Currency("Rupees");
-        System.out.println(productRepository.countAllByPrice_Currency("Rupees"));
-        Product sortedProduct = productRepository.findByTitleEqualsAndPrice_PriceOrderByPrice_Price("iPhone 15 Pro",10);
+        //******************************
+//        Product product = new Product();
+//        product.setTitle("iPhone 15 Pro");
+//        product.setDescription("Best iPhone Ever");
+//        product.setCategory(category);
+//        product.setPrice(price);
+//        productRepository.save(product);
+//        productRepository.deleteById(UUID.fromString("a1617cfa-8a3a-4538-9d81-c475c2d31799"));
+//        List<Product> products = productRepository.findAllByPrice_Currency("Rupees");
+//        System.out.println(productRepository.countAllByPrice_Currency("Rupees"));
+//        Product sortedProduct = productRepository.findByTitleEqualsAndPrice_PriceOrderByPrice_Price("iPhone 15 Pro",10);
+        //********************************
+
 
 //        Category category1 = categoryRepository.findById(UUID.fromString("4ef22b9e-7fa8-4b71-b2fe-5aade9c39e16")).get();
 //        System.out.println("Category Name Is:"+category1.getName());
@@ -89,10 +99,28 @@ public class ProductserviceApplication implements CommandLineRunner {
 //                System.out.println(e.getMessage());
 //            }
 //        }
+        //**************************************
+//        List<Product> newProducts = productRepository.findAllByTitle("iPhone 15 Pro");
+//        System.out.println("New Prods:"+newProducts);
+        //***************************************
 
-        List<Product> newProducts = productRepository.findAllByTitle("iPhone 15 Pro");
-        System.out.println("New Prods:"+newProducts);
-    }
+
+        //Create Product
+//        Category category = new Category();
+//        category.setName("Android Devices");
+//        Price price = new Price("Rupees",10);
+//        Product product = new Product();
+//        product.setTitle("Samsung Galaxy 16 Pro");
+//        product.setDescription("Best Samsung Phone Ever");
+//        product.setCategory(category);
+//        product.setPrice(price);
+//        SelfProductService selfProductService = new SelfProductService();
+//        selfProductService.createProduct(product);
+//
+//        //Get All Products
+//        List<Product> products = productRepository.findAll();
+
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(ProductserviceApplication.class, args);

@@ -1,5 +1,6 @@
 package dev.abhishek.productservice.services;
 
+import dev.abhishek.productservice.models.Category;
 import dev.abhishek.productservice.thirdpartyclients.productsservice.fakestore.FakeStoreProductDTO;
 import dev.abhishek.productservice.dtos.GenericProductDTO;
 import dev.abhishek.productservice.exceptions.NotFoundException;
@@ -8,7 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-@Primary
+
 @Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
     private FakeStoreProductServiceClient fakeStoreProductServiceClient;
@@ -40,15 +41,15 @@ public class FakeStoreProductService implements ProductService{
         return genericProductDTOS;
     }
     @Override
-    public GenericProductDTO getProductById(Long id) throws NotFoundException {
+    public GenericProductDTO getProductById(UUID id) throws NotFoundException {
        return convertFakeStoreProductToGenericProduct(fakeStoreProductServiceClient.getProductById(id));
     }
     @Override
-    public GenericProductDTO updateProductById(GenericProductDTO product,Long id) {
+    public GenericProductDTO updateProductById(GenericProductDTO product,UUID id) {
        return convertFakeStoreProductToGenericProduct(fakeStoreProductServiceClient.updateProductById(product,id));
     }
     @Override
-    public GenericProductDTO deleteProductById(Long id) {
+    public GenericProductDTO deleteProductById(UUID id) {
       return convertFakeStoreProductToGenericProduct(fakeStoreProductServiceClient.deleteProductById(id));
     }
 }

@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequestMapping("/products")
 public class ProductController {
     private ProductService productService;
-    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService){
+    public ProductController(@Qualifier("selfProductServiceImpl") ProductService productService){
         this.productService = productService;
     }
     @GetMapping
@@ -24,7 +24,7 @@ public class ProductController {
     }
     //localhost:8080/products/123
     @GetMapping("{id}")
-    public GenericProductDTO getProductById(@PathVariable("id") Long id) throws NotFoundException {
+    public GenericProductDTO getProductById(@PathVariable("id") UUID id) throws NotFoundException {
         return productService.getProductById(id);
 
     }
@@ -33,7 +33,7 @@ public class ProductController {
 //        return productService.deleteProductById(id);
 //    }
     @DeleteMapping("{id}")
-    public ResponseEntity<GenericProductDTO> deleteProductById(@PathVariable("id") Long id){
+    public ResponseEntity<GenericProductDTO> deleteProductById(@PathVariable("id") UUID id){
         return new ResponseEntity<>(
                 productService.deleteProductById(id),
                 HttpStatus.NOT_FOUND
@@ -44,7 +44,7 @@ public class ProductController {
         return productService.createProduct(product);
     }
     @PutMapping("{id}")
-    public GenericProductDTO updateProductById(@RequestBody GenericProductDTO product,@PathVariable("id") Long id){
+    public GenericProductDTO updateProductById(@RequestBody GenericProductDTO product,@PathVariable("id") UUID id){
         return productService.updateProductById(product,id);
     }
 //    @ExceptionHandler(NotFoundException.class)

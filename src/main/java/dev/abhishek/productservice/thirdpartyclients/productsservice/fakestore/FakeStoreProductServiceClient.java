@@ -13,6 +13,7 @@ import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Wrapper over FakeStore API
@@ -64,7 +65,7 @@ public class FakeStoreProductServiceClient {
             return list;
     }
 
-    public FakeStoreProductDTO getProductById(Long id) throws NotFoundException {
+    public FakeStoreProductDTO getProductById(UUID id) throws NotFoundException {
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDTO> response = restTemplate.getForEntity(specificProductRequestUrl, FakeStoreProductDTO.class,id);
         FakeStoreProductDTO fakeStoreProductDTO = response.getBody();
@@ -75,7 +76,7 @@ public class FakeStoreProductServiceClient {
         return fakeStoreProductDTO;
     }
 
-    public FakeStoreProductDTO updateProductById(GenericProductDTO product,Long id) {
+    public FakeStoreProductDTO updateProductById(GenericProductDTO product,UUID id) {
         RestTemplate restTemplate = restTemplateBuilder.build();
         RequestCallback requestCallback = restTemplate.acceptHeaderRequestCallback(FakeStoreProductDTO.class);
         ResponseExtractor<ResponseEntity<FakeStoreProductDTO>> responseExtractor = restTemplate.responseEntityExtractor(FakeStoreProductDTO.class);
@@ -83,7 +84,7 @@ public class FakeStoreProductServiceClient {
         return response.getBody();
     }
 
-    public FakeStoreProductDTO deleteProductById(Long id) {
+    public FakeStoreProductDTO deleteProductById(UUID id) {
         RestTemplate restTemplate = restTemplateBuilder.build();
 //      restTemplate.delete(getProductRequestUrl,id);//Since delete doesn't return anything so use low level execute method
         RequestCallback requestCallback = restTemplate.acceptHeaderRequestCallback(FakeStoreProductDTO.class);
