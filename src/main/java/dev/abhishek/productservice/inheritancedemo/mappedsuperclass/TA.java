@@ -1,4 +1,4 @@
-package dev.abhishek.productservice.inheritancedemo.tableperclass;
+package dev.abhishek.productservice.inheritancedemo.mappedsuperclass;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name = "tpc_mentor")
-public class Mentor extends User {
+@Entity(name = "ms_ta")
+public class TA extends User {
     private double averageRating;
 }

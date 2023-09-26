@@ -1,55 +1,60 @@
 package dev.abhishek.productservice.services;
 
-import dev.abhishek.productservice.models.Category;
-import dev.abhishek.productservice.thirdpartyclients.productsservice.fakestore.FakeStoreProductDTO;
-import dev.abhishek.productservice.dtos.GenericProductDTO;
+import dev.abhishek.productservice.dtos.GenericProductDto;
 import dev.abhishek.productservice.exceptions.NotFoundException;
-import dev.abhishek.productservice.thirdpartyclients.productsservice.fakestore.FakeStoreProductServiceClient;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
+import dev.abhishek.productservice.thirdpartyclients.productservice.fakestore.FakeStoreProductDto;
+import dev.abhishek.productservice.thirdpartyclients.productservice.fakestore.FakeStoryProductServiceClient;
+import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Service("fakeStoreProductService")
-public class FakeStoreProductService implements ProductService{
-    private FakeStoreProductServiceClient fakeStoreProductServiceClient;
-    public FakeStoreProductService(FakeStoreProductServiceClient fakeStoreProductServiceClient){
-        this.fakeStoreProductServiceClient = fakeStoreProductServiceClient;
+
+@Repository("fakeStoreProductService")
+public class FakeStoreProductService implements FakeProductService {
+
+    private FakeStoryProductServiceClient fakeStoryProductServiceClient;
+
+    private GenericProductDto convertFakeStoreProductIntoGenericProduct(FakeStoreProductDto fakeStoreProductDto) {
+
+        GenericProductDto product = new GenericProductDto();
+        product.setId(fakeStoreProductDto.getId());
+        product.setImage(fakeStoreProductDto.getImage());
+        product.setDescription(fakeStoreProductDto.getDescription());
+        product.setTitle(fakeStoreProductDto.getTitle());
+        product.setPrice(fakeStoreProductDto.getPrice());
+        product.setCategory(fakeStoreProductDto.getCategory());
+
+        return product;
     }
 
-    private GenericProductDTO convertFakeStoreProductToGenericProduct(FakeStoreProductDTO fakeStoreProductDTO){
-        GenericProductDTO newProduct = new GenericProductDTO();
-        newProduct.setId(fakeStoreProductDTO.getId());
-        newProduct.setImage(fakeStoreProductDTO.getImage());
-        newProduct.setDescription(fakeStoreProductDTO.getDescription());
-        newProduct.setCategory(fakeStoreProductDTO.getCategory());
-        newProduct.setPrice(fakeStoreProductDTO.getPrice());
-        newProduct.setTitle(fakeStoreProductDTO.getTitle());
-        return newProduct;
+    public FakeStoreProductService(FakeStoryProductServiceClient fakeStoryProductServiceClient) {
+        this.fakeStoryProductServiceClient = fakeStoryProductServiceClient;
     }
+
+
     @Override
-    public GenericProductDTO createProduct(GenericProductDTO product){
-        return convertFakeStoreProductToGenericProduct(fakeStoreProductServiceClient.createProduct(product));
+    public GenericProductDto createProduct(GenericProductDto product) {
+        return convertFakeStoreProductIntoGenericProduct(fakeStoryProductServiceClient.createProduct(product));
     }
 
     @Override
-    public List<GenericProductDTO> getAllProducts(){
-        List<GenericProductDTO> genericProductDTOS = new ArrayList<>();
-        for(FakeStoreProductDTO fakeStoreProductDTO: fakeStoreProductServiceClient.getAllProducts()){
-            genericProductDTOS.add(convertFakeStoreProductToGenericProduct(fakeStoreProductDTO));
+    public GenericProductDto getProductById(Long id) throws NotFoundException {
+        return convertFakeStoreProductIntoGenericProduct(fakeStoryProductServiceClient.getProductById(id));
+    }
+
+    @Override
+    public List<GenericProductDto> getAllProducts() {
+        List<GenericProductDto> genericProductDtos = new ArrayList<>();
+
+        for (FakeStoreProductDto fakeStoreProductDto: fakeStoryProductServiceClient.getAllProducts()) {
+            genericProductDtos.add(convertFakeStoreProductIntoGenericProduct(fakeStoreProductDto));
         }
-        return genericProductDTOS;
+        return genericProductDtos;
     }
+
     @Override
-    public GenericProductDTO getProductById(UUID id) throws NotFoundException {
-       return convertFakeStoreProductToGenericProduct(fakeStoreProductServiceClient.getProductById(id));
-    }
-    @Override
-    public GenericProductDTO updateProductById(GenericProductDTO product,UUID id) {
-       return convertFakeStoreProductToGenericProduct(fakeStoreProductServiceClient.updateProductById(product,id));
-    }
-    @Override
-    public GenericProductDTO deleteProductById(UUID id) {
-      return convertFakeStoreProductToGenericProduct(fakeStoreProductServiceClient.deleteProductById(id));
+    public GenericProductDto deleteProduct(Long id) {
+        return convertFakeStoreProductIntoGenericProduct(fakeStoryProductServiceClient.deleteProduct(id));
     }
 }
