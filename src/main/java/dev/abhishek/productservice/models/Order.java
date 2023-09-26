@@ -9,15 +9,16 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Entity(name="orders")
+@Entity(name = "orders")
 @Getter
 @Setter
-public class Order extends BaseModel{
-    @ManyToMany
+public class Order extends BaseModel {
+
+    @ManyToMany()
     @JoinTable(
             name = "product_orders",
-            joinColumns = @JoinColumn(name="order_id"),
-            inverseJoinColumns = @JoinColumn(name="product_id")
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private List<Product> products;
+    private List<Product> product;
 }

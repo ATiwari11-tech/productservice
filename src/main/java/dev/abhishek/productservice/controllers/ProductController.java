@@ -1,58 +1,62 @@
 package dev.abhishek.productservice.controllers;
 
-import dev.abhishek.productservice.dtos.GenericProductDTO;
+import dev.abhishek.productservice.dtos.GetProductTitlesRequestDto;
+import dev.abhishek.productservice.dtos.ProductDto;
 import dev.abhishek.productservice.exceptions.NotFoundException;
+import dev.abhishek.productservice.models.Product;
 import dev.abhishek.productservice.services.ProductService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
     private ProductService productService;
-    public ProductController(@Qualifier("selfProductServiceImpl") ProductService productService){
+    // constructor injection
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
-    @GetMapping
-    public List<GenericProductDTO> getAllProducts(){
-        return productService.getAllProducts();
-    }
-    //localhost:8080/products/123
-    @GetMapping("{id}")
-    public GenericProductDTO getProductById(@PathVariable("id") UUID id) throws NotFoundException {
-        return productService.getProductById(id);
 
+
+    // GET /products {}
+    @GetMapping
+    public List<ProductDto> getAllProducts(@RequestBody GetProductTitlesRequestDto requestDto) {
+        List<String> uuids = requestDto.getUuids();
+        return productService.getAllProducts(uuids);
     }
-//    @DeleteMapping("{id}")
-//    public GenericProductDTO deleteProductById(@PathVariable("id") Long id){
-//        return productService.deleteProductById(id);
-//    }
+
+    // localhost:8080/products/{id}
+    // localhost:8080/products/123
+    @GetMapping("/category/{categoryId}")
+    public List<ProductDto> getProductsInCategory(@PathVariable("categoryId") String categoryId) throws NotFoundException {
+        return productService.getProductsInCategory(categoryId);
+    }
+
+    // localhost:8080/products/{id}
+    // localhost:8080/products/123
+    @GetMapping("{id}")
+    public ProductDto getProductById(@PathVariable("id") String id) throws NotFoundException {
+        return productService.getProductById(id);
+    }
+
     @DeleteMapping("{id}")
-    public ResponseEntity<GenericProductDTO> deleteProductById(@PathVariable("id") UUID id){
+    public ResponseEntity<ProductDto> deleteProductById(@PathVariable("id") String id) {
         return new ResponseEntity<>(
-                productService.deleteProductById(id),
-                HttpStatus.NOT_FOUND
+                productService.deleteProduct(id),
+                HttpStatus.OK
         );
     }
-    @PostMapping()
-    public GenericProductDTO createProduct(@RequestBody GenericProductDTO product){
+
+    @PostMapping
+    public ProductDto createProduct(@RequestBody Product product) {
         return productService.createProduct(product);
     }
+
     @PutMapping("{id}")
-    public GenericProductDTO updateProductById(@RequestBody GenericProductDTO product,@PathVariable("id") UUID id){
-        return productService.updateProductById(product,id);
+    public ProductDto updateProductById(@RequestBody ProductDto product,@PathVariable("id") String id) {
+        return productService.updateProduct(product,id);
     }
-//    @ExceptionHandler(NotFoundException.class)
-//    private ResponseEntity<ExceptionDTO> handleNotFoundException(NotFoundException notFoundException){
-//        System.out.println("Not Found Exception happened");
-//        return new ResponseEntity(
-//                new ExceptionDTO(HttpStatus.NOT_FOUND,notFoundException.getMessage()),
-//                HttpStatus.NOT_FOUND
-//        );
-//    }
 }

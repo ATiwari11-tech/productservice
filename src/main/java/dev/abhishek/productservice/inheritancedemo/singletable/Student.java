@@ -7,10 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name="st_students")
-@DiscriminatorValue(value="1")
+@Entity(name = "st_student")
+@DiscriminatorValue(value = "1")
 public class Student extends User {
-    private Double psp;
-    private Double attendance;
-
+    private double psp;
+    private double attendance;
 }

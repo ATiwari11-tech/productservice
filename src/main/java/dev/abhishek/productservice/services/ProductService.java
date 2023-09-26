@@ -1,19 +1,20 @@
 package dev.abhishek.productservice.services;
 
-import dev.abhishek.productservice.dtos.GenericProductDTO;
+import dev.abhishek.productservice.dtos.ProductDto;
 import dev.abhishek.productservice.exceptions.NotFoundException;
+import dev.abhishek.productservice.models.Product;
 
 import java.util.List;
-import java.util.UUID;
-
 
 public interface ProductService {
-    List<GenericProductDTO> getAllProducts();
 
-    GenericProductDTO getProductById(UUID id) throws NotFoundException;
-    GenericProductDTO createProduct(GenericProductDTO product);
+    ProductDto createProduct(Product product);
 
-    GenericProductDTO updateProductById(GenericProductDTO product,UUID id);
+    ProductDto getProductById(String id) throws NotFoundException;
+    List<ProductDto> getProductsInCategory(String id) throws NotFoundException;
 
-    GenericProductDTO deleteProductById(UUID id);
+    List<ProductDto> getAllProducts(List<String> categories);
+
+    ProductDto deleteProduct(String id);
+    ProductDto updateProduct(ProductDto productDto,String id);
 }

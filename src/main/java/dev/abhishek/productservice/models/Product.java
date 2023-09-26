@@ -5,20 +5,28 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.engine.internal.Cascade;
 
+@Entity
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product extends BaseModel{
+public class Product extends BaseModel {
+
     private String title;
+
     private String description;
-    private String image;//url of the image
+
+    private String image;
+    //            P : C
+    // => L to R: 1 : 1
+    // => R to L: m : 1
+    // => Ans:    m : 1
     @ManyToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name="category")
+    @JoinColumn(name = "category")
     private Category category;
-    @OneToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    @Fetch(FetchMode.JOIN)
     private Price price;
 }
