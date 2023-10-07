@@ -4,12 +4,13 @@ import dev.abhishek.productservice.dtos.GenericProductDto;
 import dev.abhishek.productservice.exceptions.NotFoundException;
 import dev.abhishek.productservice.thirdpartyclients.productservice.fakestore.FakeStoreProductDto;
 import dev.abhishek.productservice.thirdpartyclients.productservice.fakestore.FakeStoryProductServiceClient;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Primary//Make this as primary
 @Repository("fakeStoreProductService")
 public class FakeStoreProductService implements FakeProductService {
 

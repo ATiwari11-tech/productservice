@@ -29,4 +29,5 @@ public class Product extends BaseModel {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    @Fetch(FetchMode.JOIN)
     private Price price;
+    private int inventoryCount;
 }

@@ -39,7 +39,11 @@ public class ProductController {
     // localhost:8080/products/123
     @GetMapping("{id}")
     public ProductDto getProductById(@PathVariable("id") String id) throws NotFoundException {
-        return productService.getProductById(id);
+        ProductDto productDto = productService.getProductById(id);
+        if(productDto == null){
+            throw new NotFoundException("Product Id Doesn't Exist");
+        }
+        return productDto;
     }
 
     @DeleteMapping("{id}")

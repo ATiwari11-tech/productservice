@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Primary
+//@Primary//Make this as primary
 @Service("selfProductServiceImpl")
 public class SelfProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
@@ -26,10 +26,11 @@ public class SelfProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto getProductById(String id) {
+    public ProductDto getProductById(String id) throws NotFoundException {
         Optional<Product> product = productRepository.findById(UUID.fromString(id));
-        if(product.isEmpty())
-            throw new RuntimeException();
+        if(product.isEmpty()) {
+            throw new NotFoundException("Product Not Found");
+        }
         Product prod = product.get();
         prod.getPrice();//Needed coz of lazy loading
         ProductDto productDto = new ProductDto();

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,9 +35,27 @@ public class FakeProductController {
 //    }
 
     // GET /products {}
+//    @GetMapping
+//    public List<GenericProductDto> getAllProducts() {
+//        return fakeProductService.getAllProducts();
+//    }
     @GetMapping
-    public List<GenericProductDto> getAllProducts() {
-        return fakeProductService.getAllProducts();
+    public ResponseEntity<List<GenericProductDto>> getAllProducts() {
+        List<GenericProductDto> productDtos =  fakeProductService.getAllProducts();
+        if(productDtos.isEmpty()){
+            return new ResponseEntity<>(
+                    productDtos,
+                    HttpStatus.NOT_FOUND
+            );
+        }
+//        List<GenericProductDto> genericProductDtos = new ArrayList<>();//added to fail the test
+//        for(GenericProductDto genericProductDto:productDtos){//added to fail the test
+//            genericProductDtos.add(genericProductDto);
+//
+//        }
+//        genericProductDtos.remove(genericProductDtos.get(0));//to fail the test
+        return new ResponseEntity<>(productDtos,HttpStatus.OK);//this will pass the test
+//        return new ResponseEntity<>(genericProductDtos,HttpStatus.OK);//added to fail the test
     }
 
     // localhost:8080/products/{id}
