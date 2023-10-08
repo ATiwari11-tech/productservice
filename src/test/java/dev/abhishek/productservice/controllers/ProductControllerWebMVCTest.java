@@ -9,10 +9,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+
+import static org.hamcrest.Matchers.is;
 
 import java.util.ArrayList;
 
-import static java.util.regex.Pattern.matches;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -75,6 +77,8 @@ public class ProductControllerWebMVCTest {//Real functional tests we are writing
                         .content(objectMapper.writeValueAsString(productToCreate))
         ).andExpect(
                 content().string(objectMapper.writeValueAsString(expectedProduct))
-        ).andExpect(status().is(200));
+        ).andExpect(status().is(200))
+                .andExpect(jsonPath("$.student.name",is("Naman")))//here matchers coming from hamcrest
+                .andExpect(jsonPath("$.length()",is(2)));
     }
 }

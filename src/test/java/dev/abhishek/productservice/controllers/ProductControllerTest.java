@@ -7,12 +7,16 @@ import dev.abhishek.productservice.services.ProductService;
 import dev.abhishek.productservice.thirdpartyclients.productservice.fakestore.FakeStoryProductServiceClient;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.stereotype.Component;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -23,6 +27,8 @@ public class ProductControllerTest {
     private ProductController productController;
     @MockBean
     private ProductService productService;
+    @Captor
+    private ArgumentCaptor<String> idCaptor;
     @Test
     void returnNullWhenProductDoesntExist() throws NotFoundException {
         when(productService.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a0"))
@@ -55,6 +61,19 @@ public class ProductControllerTest {
                 .thenReturn(null);
 
         assertThrows(NotFoundException.class,() -> productController.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1"));
+    }
+    @Test
+    void  productControllerCallsProductServiceWithSameProductId() throws NotFoundException {
+        String id = "c4550096-1596-432d-89c2-c6f3fb9954a1";
+        when(productService.getProductById(any()))
+                .thenReturn(new ProductDto());
+        //check that the product service is being called with the exact same
+        //param as controller
+
+        productController.getProductById(id);
+        verify(productService).getProductById(idCaptor.capture());
+        assertEquals(id,idCaptor.getValue());
+
     }
     @Test
     @DisplayName("1+1 equals 2")
