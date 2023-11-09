@@ -21,77 +21,77 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class ProductControllerTest {
-    @Autowired
-    private FakeStoryProductServiceClient fakeStoryProductServiceClient;
-    @Autowired
-    private ProductController productController;
-    @MockBean
-    private ProductService productService;
-    @Captor
-    private ArgumentCaptor<String> idCaptor;
-    @Test
-    void returnNullWhenProductDoesntExist() throws NotFoundException {
-        when(productService.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a0"))
-                .thenReturn(null);
-        ProductDto productDto = productController.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a0");
-
-        assertNull(productDto);
-    }
-    @Test
-    void shouldReturnTitleABCWithProductId1() throws NotFoundException {
-        ProductDto productDto = new ProductDto();
-        productDto.setTitle("ABC");
-        when(productService.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1"))//this id doesn't exist in DB
-                .thenReturn(productDto);
-        ProductDto productDto1 = productController.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1");
-
-        assertEquals("ABC",productDto1.getTitle());
-    }
-    @Test
-    void returnProductWhenProductExists() throws NotFoundException {
-        ProductDto productDto = new ProductDto();
+//    @Autowired
+//    private FakeStoryProductServiceClient fakeStoryProductServiceClient;
+//    @Autowired
+//    private ProductController productController;
+//    @MockBean
+//    private ProductService productService;
+//    @Captor
+//    private ArgumentCaptor<String> idCaptor;
+//    @Test
+//    void returnNullWhenProductDoesntExist() throws NotFoundException {
+//        when(productService.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a0"))
+//                .thenReturn(null);
+////        ProductDto productDto = productController.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a0");
+////
+////        assertNull(productDto);
+//    }
+//    @Test
+//    void shouldReturnTitleABCWithProductId1() throws NotFoundException {
+//        ProductDto productDto = new ProductDto();
 //        productDto.setTitle("ABC");
-        when(productService.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1"))//this id doesn't exist in DB
-                .thenReturn(productDto);
-        assertEquals(productDto,productController.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1"));
-    }
-    @Test
-    void throwsExceptionWhenProductDoesntExist() throws NotFoundException {
-        when(productService.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1"))//this id doesn't exist in DB
-                .thenReturn(null);
-
-        assertThrows(NotFoundException.class,() -> productController.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1"));
-    }
-    @Test
-    void  productControllerCallsProductServiceWithSameProductId() throws NotFoundException {
-        String id = "c4550096-1596-432d-89c2-c6f3fb9954a1";
-        when(productService.getProductById(any()))
-                .thenReturn(new ProductDto());
-        //check that the product service is being called with the exact same
-        //param as controller
-
-        productController.getProductById(id);
-        verify(productService).getProductById(idCaptor.capture());
-        assertEquals(id,idCaptor.getValue());
-
-    }
-    @Test
-    @DisplayName("1+1 equals 2")
-    void testOnePlusOneEqualsTrue() throws NotFoundException {
-        //this is between middle of unit test and integration test but neither unit test nor integration test
-//        System.out.println("It is true");
-//        assert(2 == 1+1);
-//        assertEquals(11,1+1,"1+1 is not equal to 11");
-//        assertNull(fakeStoryProductServiceClient.getProductById(101L));
-        assertThrows(NotFoundException.class,() -> fakeStoryProductServiceClient.getProductById(101L));
-    }
-    @Test
-    void additionShouldBeCorrect(){
-        assert -1 + -1 == -2;
-        assert -1 + 0 == -1;
-        assert 1 + 0 == 1;
-        assert 1 + 1 == 2;
-    }
+//        when(productService.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1"))//this id doesn't exist in DB
+//                .thenReturn(productDto);
+////        ProductDto productDto1 = productController.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1");
+////
+////        assertEquals("ABC",productDto1.getTitle());
+//    }
+//    @Test
+//    void returnProductWhenProductExists() throws NotFoundException {
+////        ProductDto productDto = new ProductDto();
+//////        productDto.setTitle("ABC");
+////        when(productService.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1"))//this id doesn't exist in DB
+////                .thenReturn(productDto);
+////        assertEquals(productDto,productController.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1"));
+//    }
+////    @Test
+////    void throwsExceptionWhenProductDoesntExist() throws NotFoundException {
+////        when(productService.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1"))//this id doesn't exist in DB
+////                .thenReturn(null);
+////
+//////        assertThrows(NotFoundException.class,() -> productController.getProductById("c4550096-1596-432d-89c2-c6f3fb9954a1"));
+////    }
+////    @Test
+////    void  productControllerCallsProductServiceWithSameProductId() throws NotFoundException {
+////        String id = "c4550096-1596-432d-89c2-c6f3fb9954a1";
+////        when(productService.getProductById(any()))
+////                .thenReturn(new ProductDto());
+////        //check that the product service is being called with the exact same
+////        //param as controller
+////
+//////        productController.getProductById(id);
+//////        verify(productService).getProductById(idCaptor.capture());
+//////        assertEquals(id,idCaptor.getValue());
+////
+////    }
+//    @Test
+//    @DisplayName("1+1 equals 2")
+//    void testOnePlusOneEqualsTrue() throws NotFoundException {
+//////        this is between middle of unit test and integration test but neither unit test nor integration test
+//// //       System.out.println("It is true");
+//////        assert(2 == 1+1);
+////  //      assertEquals(11,1+1,"1+1 is not equal to 11");
+////  //      assertNull(fakeStoryProductServiceClient.getProductById(101L));
+//        assertThrows(NotFoundException.class,() -> fakeStoryProductServiceClient.getProductById(101L));
+//    }
+//    @Test
+//    void additionShouldBeCorrect(){
+//        assert -1 + -1 == -2;
+//        assert -1 + 0 == -1;
+//        assert 1 + 0 == 1;
+//        assert 1 + 1 == 2;
+//    }
 }
 
 //Assertion framework

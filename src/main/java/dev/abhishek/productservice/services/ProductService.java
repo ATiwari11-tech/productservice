@@ -3,6 +3,7 @@ package dev.abhishek.productservice.services;
 import dev.abhishek.productservice.dtos.ProductDto;
 import dev.abhishek.productservice.exceptions.NotFoundException;
 import dev.abhishek.productservice.models.Product;
+import dev.abhishek.productservice.security.JWTObject;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface ProductService {
 
     ProductDto createProduct(Product product);
 
-    ProductDto getProductById(String id) throws NotFoundException;
+    ProductDto getProductById(String id,String authObject) throws NotFoundException;
     List<ProductDto> getProductsInCategory(String id) throws NotFoundException;
 
     List<ProductDto> getAllProducts(List<String> categories);

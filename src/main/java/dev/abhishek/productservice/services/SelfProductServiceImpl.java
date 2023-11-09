@@ -6,6 +6,7 @@ import dev.abhishek.productservice.models.Category;
 import dev.abhishek.productservice.models.Product;
 import dev.abhishek.productservice.repositories.CategoryRepository;
 import dev.abhishek.productservice.repositories.ProductRepository;
+import dev.abhishek.productservice.security.JWTObject;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,16 @@ public class SelfProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto getProductById(String id) throws NotFoundException {
+    public ProductDto getProductById(String id,String userIdTryingToAccess) throws NotFoundException {
+        //Get Product From DB
+        //Product product = ProductRepository.getProductById(id);
+        //if(product.getStatus().equals(PRIVATE)){
+        //if(useridTryingToAccess.equals(product.getCreatorId()){
+        //return product;
+        //}
+        // return null;
+        //}
+        //return product;
         Optional<Product> product = productRepository.findById(UUID.fromString(id));
         if(product.isEmpty()) {
             throw new NotFoundException("Product Not Found");

@@ -2,11 +2,11 @@ package dev.abhishek.productservice.controllers;
 
 import dev.abhishek.productservice.dtos.GenericProductDto;
 import dev.abhishek.productservice.exceptions.NotFoundException;
+import dev.abhishek.productservice.security.TokenValidator;
 import dev.abhishek.productservice.services.FakeProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +16,7 @@ public class FakeProductController {
 //    @Autowired
     // field injection
     private FakeProductService fakeProductService;
+    private TokenValidator tokenValidator;
     // ....;
     // ...;
 
@@ -23,8 +24,9 @@ public class FakeProductController {
 
     // constructor injection
 //    @Autowired
-    public FakeProductController(FakeProductService fakeProductService) {
+    public FakeProductController(FakeProductService fakeProductService,TokenValidator tokenValidator) {
         this.fakeProductService = fakeProductService;
+        this.tokenValidator = tokenValidator;
     }
 //
 
