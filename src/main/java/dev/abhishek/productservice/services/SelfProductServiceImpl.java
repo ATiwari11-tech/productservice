@@ -1,5 +1,6 @@
 package dev.abhishek.productservice.services;
 
+import dev.abhishek.productservice.dtos.GenericProductDto;
 import dev.abhishek.productservice.dtos.ProductDto;
 import dev.abhishek.productservice.exceptions.NotFoundException;
 import dev.abhishek.productservice.models.Category;
@@ -8,6 +9,10 @@ import dev.abhishek.productservice.repositories.CategoryRepository;
 import dev.abhishek.productservice.repositories.ProductRepository;
 import dev.abhishek.productservice.security.JWTObject;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-//@Primary//Make this as primary
+@Primary//Make this as primary
 @Service("selfProductServiceImpl")
 public class SelfProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
@@ -107,6 +112,24 @@ public class SelfProductServiceImpl implements ProductService {
         }
         return productDtos;
     }
+
+//    public List<GenericProductDto> getAllProducts() {
+//        List<Product> products = productRepository.getAll(
+//                Pageable.ofSize(10)//first 10 items or less only
+//        );
+//        PageRequest pageRequest = PageRequest.of(2,10);
+//        // get me the second page
+//        // where size of each page is 10
+//        List<Product> products1 = productRepository.getAll(
+//                pageRequest
+//        );
+//        List<GenericProductDto> genericProductDtos = new ArrayList<>();
+//        for(Product product:products){
+//            GenericProductDto genericProductDto = GenericProductDto.from(product);
+//            genericProductDtos.add(genericProductDto);
+//        }
+//        return genericProductDtos;
+//    }
 
     @Override
     public ProductDto deleteProduct(String id) {

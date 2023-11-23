@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-@Primary//Make this as primary
+//@Primary//Make this as primary
 @Repository("fakeStoreProductService")
 public class FakeStoreProductService implements FakeProductService {
     @Autowired

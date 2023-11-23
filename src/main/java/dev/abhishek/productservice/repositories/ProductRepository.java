@@ -2,6 +2,8 @@ package dev.abhishek.productservice.repositories;
 
 import dev.abhishek.productservice.models.Category;
 import dev.abhishek.productservice.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,7 +22,10 @@ extends JpaRepository<Product, UUID> {
 
     Product findByTitleEqualsAndPrice_PriceOrderByPrice_price(String title, double price);
 
-    List<Product> findAllByPrice_Currency(String currency);
+    List<Product> findAllByPrice_Currency(String currency, Pageable pageable);
+//    List<Product> getAll(Pageable pageable);
+
+    Page<Product> findAllByTitleContaining(String title, Pageable pageable);
 
     @Override
     void delete(Product entity);
@@ -43,6 +48,7 @@ extends JpaRepository<Product, UUID> {
     @Query(value = CustomQueries.FIND_ALL_BY_TITLE, nativeQuery = true)
     List<Product> findAllByTitle(String naman);
 
-//    @Query("select Product from Product where Product.price.currency = :currency and Product.title = :naman")
+
+    //    @Query("select Product from Product where Product.price.currency = :currency and Product.title = :naman")
 //    List<Product> doSomething(String naman, String currency);
 }
